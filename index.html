@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="zombie110year">
+  <title>pandoc 转换 markdown 为 reveal.js 幻灯片</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/css/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/css/reveal.css">
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/css/theme/serif.custom.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/css/print/pdf.css' : 'https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    var mathElements = document.getElementsByClassName("math");
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") { katex.render(texText.data, mathElements[i], { displayMode: mathElements[i].classList.contains("display"), throwOnError: false } );
+    }}});</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" />
+  <link rel="stylesheet" href="theme/serif.custom.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">pandoc 转换 markdown 为 reveal.js 幻灯片</h1>
+  <p class="author">zombie110year</p>
+  <p class="date">2020年1月30日</p>
+</section>
+
+<section class="slide level1">
+
+<p>本文由 Markdown 编写，并且可以直接转换为 reveal.js 幻灯片：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">pandoc</span> -s -t revealjs --katex -o ./index.html ./README.md</span></code></pre></div>
+<p>建议到 github.com/zombie110year/revealjs-pandoc-tutorial 下载源码转换后阅读。</p>
+</section>
+<section id="转换命令" class="slide level1">
+<h1>转换命令</h1>
+<div class="columns">
+<div class="column">
+<p>假设我们的 md 文档名为 <code>slides.md</code>，那么用以下命令</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">pandoc</span> -s -t revealjs -o ./index.html ./slides.md</span></code></pre></div>
+</div><div class="column">
+<ul>
+<li><code>-s</code>/<code>--standalone</code> 表示生成独立文档</li>
+<li><code>-t revealjs</code> 表示生成目标是 reveal.js 幻灯片</li>
+<li><code>-o ./index.html</code> 表示生成到 <code>./index.html</code> 文件</li>
+<li><code>./slides.md</code> 表示输入文件</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="slide level1">
+
+<p>简单来说，就是：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">pandoc</span> -s -t <span class="op">&lt;</span>目标格式<span class="op">&gt;</span> -o <span class="op">&lt;</span>输出文件<span class="op">&gt;</span> <span class="op">&lt;</span>输入文件<span class="op">&gt;</span></span></code></pre></div>
+<p>并且，需要将 <code>reveal.js</code> 的源代码目录放在 <code>index.html</code> 文件的同目录下， 因为 <code>index.html</code> 将会通过</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;reveal.js/js/reveal.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span></code></pre></div>
+<p>来加载 reveal.js 脚本。</p>
+</section>
+<section id="编辑-markdown-文件" class="slide level1">
+<h1>编辑 Markdown 文件</h1>
+<p>Markdown 中的每一页幻灯，都用 <code>------</code> 这样的分割线分隔</p>
+<p>这样 pandoc 会把它们转换成不同的 <code>&lt;section&gt;</code></p>
+</section>
+<section class="slide level1">
+
+<h2 id="主题样式">主题样式</h2>
+<p>我们可以通过修改 pandoc 的参数来选择主题： 在 pandoc 的手册中，提到会使用变量 <code>theme</code> 来设置主题。</p>
+<p>在 <code>reveal.js/css/theme/</code> 下已经提供了许多个 CSS 文件，这些文件 就是不同主题的样式表。</p>
+<p>在 markdown 的 YAML 头处添加</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> serif.custom</span></span></code></pre></div>
+<p>便可以替换为 <code>serif.custom.css</code> 主题。</p>
+</section>
+<section class="slide level1">
+
+<h2 id="自定义主题">自定义主题</h2>
+<p>只要实现了这些类的样式，就可以了。 reveal.js 使用 SASS 为 CSS 预处理器， 如果你希望将新的主题持续维护下去的话，建议也使用 CSS 预处理器。</p>
+<p>比如我就觉得标题的文字太大了，将 <code>serif.css</code> 复制为 <code>serif.custom.css</code> 修改为</p>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb6"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">.reveal</span> h1 {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="kw">font-size</span>: <span class="dv">2</span><span class="dt">em</span><span class="op">;</span> <span class="co">/* 原本是 3.77 em */</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>}</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">.reveal</span> h2 {</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="kw">font-size</span>: <span class="dv">1.55</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="fu">.reveal</span> h3 {</span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="kw">font-size</span>: <span class="dv">1.33</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>}</span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="fu">.reveal</span> h4 {</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="kw">font-size</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>}</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h2 id="数学公式">数学公式</h2>
+<p>pandoc 完成转化，不需要配置 reveal.js 使用 mathjax。</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">\begin</span>{<span class="ex">cases</span>}</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ss">  x &amp;= </span><span class="sc">\cos</span><span class="ss">{t}</span><span class="sc">\\</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ss">  y &amp;= </span><span class="sc">\sin</span><span class="ss">{t}</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="kw">\end</span>{<span class="ex">cases</span>}, t <span class="fu">\in</span> [0, 2<span class="fu">\pi</span>)</span></code></pre></div>
+<p>我们可以简单地在命令行中指定用 <span class="math inline">\KaTeX</span>：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">pandoc</span> -s -t revealjs --katex -o <span class="op">&lt;</span>out<span class="op">&gt;</span> <span class="op">&lt;</span>in<span class="op">&gt;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<p><span class="math display">
+\begin{cases}
+  x &amp;= \cos{t}\\
+  y &amp;= \sin{t}
+\end{cases}, t \in [0, 2\pi)
+</span></p>
+</section>
+<section id="全局配置" class="slide level1">
+<h1>全局配置</h1>
+<p>可以在 Markdown 的 YAML 头中添加所有 reveal.js 的可用配置， 见 reveal.js 在 GitHub 上的 <a href="https://github.com/hakimel/reveal.js#configuration">Readme</a>。</p>
+</section>
+<section id="个体配置" class="slide level1">
+<h1>个体配置</h1>
+<p>可以对每一张幻灯片设置 <code>data-*</code> 属性来达到配置的目的。 在 Markdown 中，使用这样的语法：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">## &lt;!-- 上一页 --&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="fu"># {data-background-color=&quot;cyan&quot;}</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>如果没出问题的话，应该是浅蓝色背景</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a>---</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a>&lt;!--<span class="co"> 下一页 --&gt;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<p><strong>注意！</strong></p>
+<p>由于 reveal.js 将第一个标题等级作为幻灯片的划分等级， 因此上面的 <code>{data-background-color="cyan"}</code> 是挂在 1 级标题后的。 如果是其他级别的标题，则不会生效，属性会挂载到 <code>h*</code> 标签上，而不是 <code>section</code> 标签。</p>
+<p>下一页预览：</p>
+</section>
+<section id="section" class="slide level1" data-background-color="cyan">
+<h1></h1>
+<p>如果没出问题的话，应该是浅蓝色背景</p>
+</section>
+<section class="slide level1">
+
+<h2 id="高亮">高亮</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;highlight-red&quot;</span><span class="kw">&gt;</span>红色高亮&lt;/span&gt;</span></code></pre></div>
+<p><span class="fregment highlight-red">红色高亮</span></p>
+</section>
+<section id="视图" class="slide level1">
+<h1>视图</h1>
+<dl>
+<dt>缩略视图</dt>
+<dd>按 <kdb>ESC</kdb> 进入缩略图模式，再按一次返回。
+</dd>
+<dt>演讲者视图</dt>
+<dd>按 <kbd>S</kbd> 进入演讲模式，可以显示注释、播放时间、下一页内容等。 因为这个功能是通过弹窗实现的，需要用户给予该页面弹窗权限（并且关闭弹窗拦截的插件）
+</dd>
+</dl>
+</section>
+<section id="进阶功能" class="slide level1">
+<h1>进阶功能</h1>
+<ul>
+<li>增量模式</li>
+<li>多列模式</li>
+<li>注释</li>
+<li>暂停</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="增量模式">增量模式</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a>::: incremental</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>- <span class="st">第一条</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">- 第二条</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">- 第三条</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>:::</span></code></pre></div>
+<p>将会转换成三张幻灯片，条目逐条递增。 下一页演示</p>
+</section>
+<section class="slide level1">
+
+<div>
+<ul>
+<li class="fragment">第一条</li>
+<li class="fragment">第二条</li>
+<li class="fragment">第三条</li>
+</ul>
+</div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb12"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1"></a>::: 类名</span>
+<span id="cb12-2"><a href="#cb12-2"></a>:::</span></code></pre></div>
+<p>将会被 pandoc 转换为</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;类名&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h2 id="多列模式">多列模式</h2>
+<p>需要一个嵌套的 <code>.columns &gt; .column</code> 元素</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1"></a>:::: columns</span>
+<span id="cb14-2"><a href="#cb14-2"></a>::: {.column width=50%}</span>
+<span id="cb14-3"><a href="#cb14-3"></a>左侧</span>
+<span id="cb14-4"><a href="#cb14-4"></a>:::</span>
+<span id="cb14-5"><a href="#cb14-5"></a>::: {.column width=50%}</span>
+<span id="cb14-6"><a href="#cb14-6"></a>右侧</span>
+<span id="cb14-7"><a href="#cb14-7"></a>:::</span>
+<span id="cb14-8"><a href="#cb14-8"></a>::::</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>左侧</p>
+</div><div class="column" style="width:50%;">
+<p>右侧</p>
+</div>
+</div>
+</section>
+<section class="slide level1">
+
+<h2 id="注释">注释</h2>
+<p>将注释包裹在 <code>.notes</code> 元素中，只有在演讲者视图才会显示：</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1"></a>::: notes</span>
+<span id="cb15-2"><a href="#cb15-2"></a>这里是一段注释</span>
+<span id="cb15-3"><a href="#cb15-3"></a>:::</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<p>按 <kbd>S</kbd> 查看注释：</p>
+<aside class="notes">
+<p>这里是一段注释</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<h2 id="暂停">暂停</h2>
+<p>插入带空格的三个点，就可以在插入两段文字之间做一个停顿， 需要再次点击才触发下一段：</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1"></a>第一段</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>第二段，马上暂停</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>.🈳️️.🈳️️.</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>第三段</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="演示暂停">演示暂停</h3>
+<p>第一段</p>
+<p>第二段，马上暂停</p>
+<div class="fragment">
+<p>第三段</p>
+</div>
+</section>
+<section id="导出" class="slide level1">
+<h1>导出</h1>
+<p>在打开幻灯片时添加 queryString <code>print-pdf</code> 则会调用打印样式将幻灯片 重新排版，然后就可以利用浏览器的打印功能了。</p>
+<pre><code>http://localhost:8080/?print-pdf&amp;showNotes=true</code></pre>
+<ul>
+<li><code>showNotes</code> 用于决定是否显示演讲者注释</li>
+<li>遗憾的是，需要用基于 chromium 的浏览器才能正常排版，FireFox 调用系统打印功能，格式会乱掉。</li>
+</ul>
+<p>来试试这个：<a href="?print-pdf&amp;showNotes=true">?print-pdf&amp;showNotes=ture</a>。</p>
+</section>
+<section id="指定-cdn" class="slide level1">
+<h1>指定 CDN</h1>
+<p>通过在 YAML 头中添加 <code>revealjs-url</code> 项的值，来指定 revealjs 路径。</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">revealjs-url</span><span class="kw">:</span><span class="at"> https://cdn.jsdelivr.net/npm/reveal.js@3.9.1</span></span></code></pre></div>
+<p>如果我们使用了自定义的主题的话，那么在 CDN 上是找不到的。 需要用 pandoc 的 header-includes 配置直接插入我们的 CSS 文件。</p>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb19"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">header-includes</span><span class="kw">:</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">  - </span><span class="ch">|</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>    ```{=html}</span>
+<span id="cb19-4"><a href="#cb19-4"></a>    &lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/serif.custom.css&quot;&gt;</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    ```</span></code></pre></div>
+</section>
+<section id="完" class="slide level1">
+<h1>完</h1>
+<p>（才不感谢你的阅读呢）</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://cdn.jsdelivr.net/npm/reveal.js@3.9.1/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
